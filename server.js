@@ -46,31 +46,42 @@ function start() {
   }
   function addEmp(){
     connection.query("SELECT * FROM role", function(err, results) {
-
-    inquirer.prompt({
-        name:"firstName",
-        message:"first name:",
-        type: "input"
-    },
-    {
-        name:"lastName",
-        message:"last name:",
-        type: "input"
-    },
-    {   
-        name: "role",
-        type: "list",
-        choices: function() {
-        var roleArray = [];
-        for (var i = 0; i < results.length; i++) {
-            roleArray.push(results[i].title);
-        }
-        return roleArray;
+        inquirer.prompt({
+            name:"firstName",
+            message:"first name:",
+            type: "input"
         },
-        message: "What role?"},
-       
-    ).then(function(res){});
+        {
+            name:"lastName",
+            message:"last name:",
+            type: "input"
+        },
+        {   
+            name: "role",
+            type: "list",
+            choices: function() {
+            var roleArray = [];
+            for (var i = 0; i < results.length; i++) {
+                roleArray.push(results[i].title);
+            }
+            return roleArray;
+            },
+            message: "What role?"},
+        ).then(function(res){
+            connection.query("INSERT INTO employee SET ?",
+            {
+                first_name = res.firstName,
+                last_name = res.lastName,
+                role_id = res.role
+            },
+            function(err){
+                if (err) throw err;
+            })
+        });
+    });
   }
   function update(){
-    inquirer.prompt({}).then(function(res){});
+    inquirer.prompt({
+        
+    }).then(function(res){});
   }
