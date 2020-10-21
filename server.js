@@ -30,15 +30,47 @@ function start() {
                 view();
                 break;
             case "Add employee":
-                add();
+                addEmp();
                 break;
             case "Update employee":
                 update();
                 break;
         }
-        
       });
+  }  
+  function view(){
+    connection.query("SELECT * FROM employee", function(err, results) {
+        if (err) throw err;
+        console.table(results);
+    });
   }
-  function add(){}
-  function view(){}
-  function update(){}
+  function addEmp(){
+    connection.query("SELECT * FROM role", function(err, results) {
+
+    inquirer.prompt({
+        name:"firstName",
+        message:"first name:",
+        type: "input"
+    },
+    {
+        name:"lastName",
+        message:"last name:",
+        type: "input"
+    },
+    {   
+        name: "role",
+        type: "list",
+        choices: function() {
+        var roleArray = [];
+        for (var i = 0; i < results.length; i++) {
+            roleArray.push(results[i].title);
+        }
+        return roleArray;
+        },
+        message: "What role?"},
+       
+    ).then(function(res){});
+  }
+  function update(){
+    inquirer.prompt({}).then(function(res){});
+  }

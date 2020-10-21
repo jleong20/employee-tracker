@@ -10,13 +10,16 @@ USE employee_db;
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL,
+    PRIMARY KEY (id)
+
 );
 -- create role table --
 CREATE TABLE role (
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL,
-    department_id INT
+    department_id INT,
+    PRIMARY KEY (id)
 );
 -- create employee table --
 CREATE TABLE employee (
@@ -24,29 +27,15 @@ CREATE TABLE employee (
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     role_id INT,
-    manager_id INT
+    manager_id INT,
+    PRIMARY KEY (id)
 );
 
--- insert --
-INSERT INTO  ()
-VALUES ();
+SELECT first_name, last_name
+FROM employee
+INNER JOIN role ON employee.role_id = role.id;
 
-INSERT INTO  ()
-VALUES ();
 
-INSERT INTO  ()
-VALUES ();
-
-INSERT INTO  ()
-VALUES ();
-
--- update --
-UPDATE 
-SET 
-WHERE 
-
--- select --
-SELECT * FROM people;
 
 
 
