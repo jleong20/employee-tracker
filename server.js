@@ -81,7 +81,35 @@ function start() {
     });
   }
   function update(){
-    inquirer.prompt({
-        
-    }).then(function(res){});
-  }
+    connection.query("SELECT * FROM employee", function(err, results) {
+        inquirer.prompt({
+            name:"empName",
+            choices: function() {
+                var empArray = [];
+                for (var i = 0; i < results.length; i++) {
+                    empArray.push(results[i].first_name);
+                }
+                return empArray;
+            },
+            message: "employee name: "
+        },
+        {
+            name:"empRole",
+            message: "what role: ",
+            type: "input"
+        }).then(function(res){
+            connection.query("UPDATE employee SET ? WHERE ",
+            [
+                {
+                  role_id = res.empRole
+                },
+                {
+                  first_name = res.empName
+                }
+              ]),
+            function(err) {
+                if (err) throw err;
+            }
+        });
+    })
+}
